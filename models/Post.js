@@ -1,7 +1,11 @@
+// gets out model for sql objects and column types
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
+// creates post object as an extension of the sql model
 class Post extends Model {
+
+    // custom static method to add a vote to this post
     static upvote(body, models) {
         return models.Vote.create({
             user_id: body.user_id,
@@ -12,6 +16,7 @@ class Post extends Model {
                     id: body.post_id
                 },
                 attributes: ['id', 'post_url', 'title', 'created_at',
+                // literal sql command to get current vote count after vote.
                     [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
                 ]
             });
@@ -19,6 +24,7 @@ class Post extends Model {
     }
 }
 
+// defines all the table columns
 Post.init(
     {
         id: {

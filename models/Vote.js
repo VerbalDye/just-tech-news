@@ -1,8 +1,11 @@
+// gets our model, datatypes, and sql connection
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
+// creates a class based on the model
 class Vote extends Model {};
 
+// set the columns of our table object
 Vote.init(
     {
         id: {

@@ -1,13 +1,20 @@
+// gets out model for sql objects and column types
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
+
+// gets bcrypt for secure password management
 const bcrypt = require('bcrypt');
 
+// creates our user class as an extension of our sql model
 class User extends Model {
+
+    // tells us if a given password is correct
     checkPassword(loginPw) {
         return bcrypt.compareSync(loginPw, this.password);
     }
 }
 
+// sets that tables columns
 User.init(
     {
         id: {
@@ -37,6 +44,7 @@ User.init(
         }
     },
     {
+        // Hooks interupt as the object is being created or updated and runs some code to convert the password first.
         hooks: {
             async beforeCreate(newUserData) {
                 newUserData.password = await bcrypt.hash(newUserData.password, 10);
@@ -47,7 +55,7 @@ User.init(
                 return updatedUserData;
             }
         },
-        // TABLE CONFIGURATION OPTIONS GO HERE 
+        // Table configuration options
         sequelize,
         timestamps: false,
         freezeTableName: true,

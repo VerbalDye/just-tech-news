@@ -2,6 +2,7 @@ const router = require('express').Router();
 const { Post, User, Vote } = require('../../models');
 const sequelize = require('../../config/connection');
 
+// returns a result of all posts
 router.get('/', (req, res) => {
     Post.findAll({
         attributes: ['id', 'post_url', 'title', 'created_at',
@@ -22,6 +23,7 @@ router.get('/', (req, res) => {
         });
 });
 
+// returns a result of all
 router.get('/:id', (req, res) => {
     Post.findOne({
         where: {

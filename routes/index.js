@@ -1,3 +1,4 @@
+// gets routes ready for the server.js file
 const router = require('express').Router();
 
 const apiRoutes = require('./api');

@@ -1,3 +1,4 @@
+// initializes our mysql connection to be exported to other files that need it
 const Sequelize = require('sequelize');
 require('dotenv').config();
 

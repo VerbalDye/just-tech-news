@@ -1,7 +1,9 @@
+// defines table relationships and exports them for use
 const User = require('./User');
 const Post = require('./Post');
 const Vote = require('./Vote');
 
+// one user ownes each post
 User.hasMany(Post, {
     foreignKey: 'user_id'
 });
@@ -10,6 +12,7 @@ Post.belongsTo(User, {
     foreignKey: 'user_id'
 });
 
+// users and posts are highly associated through votes
 User.belongsToMany(Post, {
     through: Vote,
     as: 'voted_posts',
@@ -22,14 +25,17 @@ Post.belongsToMany(User, {
     foreignKey: 'post_id'
 });
 
+// users own their votes
 Vote.belongsTo(User, {
     foreignKey: 'user_id'
 });
 
+// posts also own their votes
 Vote.belongsTo(Post, {
     foreignKey: 'post_id'
 });
 
+// define that users and post will have many votes
 User.hasMany(Vote, {
     foreignKey: 'user_id'
 });
