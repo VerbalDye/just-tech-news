@@ -7,17 +7,28 @@ const Comment = require('./Comment');
 // one user ownes each post
 User.hasMany(Post, {
     foreignKey: 'user_id',
-    onDelete: 'cascade'
+    onDelete: 'CASCADE'
 });
 
-Post.belongsTo(User, {
-    foreignKey: 'user_id'
-});
-
-// users and posts are highly associated through votes
 User.belongsToMany(Post, {
     through: Vote,
     as: 'voted_posts',
+    foreignKey: 'user_id'
+});
+
+User.hasMany(Vote, {
+    foreignKey: 'user_id',
+    onDelete: 'CASCADE'
+});
+
+User.hasMany(Comment, {
+    foreignKey: 'user_id',
+    onDelete: 'CASCADE'
+});
+
+
+// post associations
+Post.belongsTo(User, {
     foreignKey: 'user_id'
 });
 
@@ -27,27 +38,29 @@ Post.belongsToMany(User, {
     foreignKey: 'post_id'
 });
 
-// users own their votes
+Post.hasMany(Vote, {
+    foreignKey: 'post_id',
+    onDelete: 'CASCADE'
+});
+
+
+Post.hasMany(Comment, {
+    foreignKey: 'post_id',
+    onDelete: 'CASCADE'
+});
+
+
+// vote associations
 Vote.belongsTo(User, {
     foreignKey: 'user_id'
 });
 
-// posts also own their votes
 Vote.belongsTo(Post, {
     foreignKey: 'post_id'
 });
 
-// define that users and post will have many votes
-User.hasMany(Vote, {
-    foreignKey: 'user_id',
-    onDelete: 'cascade'
-});
 
-Post.hasMany(Vote, {
-    foreignKey: 'post_id',
-    onDelete: 'cascade'
-});
-
+// comment associations
 Comment.belongsTo(User, {
     foreignKey: 'user_id'
 });
@@ -56,14 +69,7 @@ Comment.belongsTo(Post, {
     foreignKey: 'post_id'
 });
 
-User.hasMany(Comment, {
-    foreignKey: 'user_id',
-    onDelete: 'cascade'
-});
 
-Post.hasMany(Comment, {
-    foreignKey: 'post_id',
-    onDelete: 'cascade'
-});
+
 
 module.exports = { User, Post, Vote, Comment };
