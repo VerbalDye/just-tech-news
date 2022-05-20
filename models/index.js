@@ -6,7 +6,8 @@ const Comment = require('./Comment');
 
 // one user ownes each post
 User.hasMany(Post, {
-    foreignKey: 'user_id'
+    foreignKey: 'user_id',
+    onDelete: 'cascade'
 });
 
 Post.belongsTo(User, {
@@ -38,11 +39,13 @@ Vote.belongsTo(Post, {
 
 // define that users and post will have many votes
 User.hasMany(Vote, {
-    foreignKey: 'user_id'
+    foreignKey: 'user_id',
+    onDelete: 'cascade'
 });
 
 Post.hasMany(Vote, {
-    foreignKey: 'post_id'
+    foreignKey: 'post_id',
+    onDelete: 'cascade'
 });
 
 Comment.belongsTo(User, {
@@ -54,11 +57,13 @@ Comment.belongsTo(Post, {
 });
 
 User.hasMany(Comment, {
-    foreignKey: 'user_id'
+    foreignKey: 'user_id',
+    onDelete: 'cascade'
 });
 
 Post.hasMany(Comment, {
-    foreignKey: 'post_id'
+    foreignKey: 'post_id',
+    onDelete: 'cascade'
 });
 
 module.exports = { User, Post, Vote, Comment };
